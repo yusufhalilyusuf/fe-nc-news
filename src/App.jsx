@@ -6,6 +6,7 @@ import Articles from "./components/Articles";
 import Home from "./components/Home";
 
 function App() {
+  
   return (
     
       <>
@@ -14,6 +15,7 @@ function App() {
       <h1 style={{textAlign:'center'}}>Welcome to Nc News</h1>
         <Navbar />
         <Routes>
+
           <Route path='/' element={<Home />} />
           <Route path='/articles' element={<Articles />} />
         </Routes>
