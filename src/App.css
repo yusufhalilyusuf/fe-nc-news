@@ -1,0 +1,87 @@
+#root {
+ width: 100%;
+ height: 100%;
+ background-color: aqua;
+ font-size: 1.1rem;
+  
+ 
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0.5rem;
+  overflow: hidden;
+  background-color: #000000;
+  border: black;
+  font-size: 1rem;
+}
+
+li {
+  float: left;
+  
+}
+
+li a {
+  display: flex;
+  color: white;
+  text-align: center;
+  padding: 1rem 1rem;
+  text-decoration: none;
+  font-size: larger;
+}
+
+/* Change the link color to #111 (black) on hover */
+li a:hover {
+  background-color: #ffffff;
+  color: black;
+}
+
+.article {
+  display: flex;
+  flex-direction:column;
+  background-color: beige;
+  width: 12rem;
+  padding: 1rem;
+  margin: 1rem;
+  border: solid black;
+}
+
+img {
+  width: 12rem;
+  height: 8rem;
+  border: solid;
+}
+
+.center {
+  justify-content: center;
+}
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+nav{
+
+}
+
+.title-strong{
+  font-weight:bold ;
+}
+.box:nth-child(1) {
+  flex: 1;
+}
+
+.box:nth-child(2) {
+  flex: 4;
+}
+
+.box:nth-child(3) {
+  flex: 1;
+}
+.box:nth-child(4) {
+  flex: 1;
+}
+.box:nth-child(5) {
+  flex: 1;
+}
