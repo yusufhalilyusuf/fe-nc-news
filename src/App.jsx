@@ -4,9 +4,8 @@ import "./App.css";
 import Navbar from "./components/Navbar";
 import Articles from "./components/Articles";
 import Home from "./components/Home";
-
 function App() {
-  
+
   return (
     
       <>
