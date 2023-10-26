@@ -111,7 +111,7 @@ export default function SingleArticle() {
             setShowComments(!showComments);
           }}
           type='submit'
-        >{`${showComments ? "Hide":"Show" } Comments (${article.comment_count})`}</button>
+        >{`${showComments ? "Hide":"Show" } Comments ${showComments ?'': '('+article.comment_count+')'}`}</button>
       </div>
 
       <div>
