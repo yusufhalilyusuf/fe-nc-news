@@ -5,7 +5,10 @@ import {
   getCommentsByArticleId,
 } from "../utils/api";
 import { useParams } from "react-router-dom";
+
+
 export default function SingleArticle() {
+    const [isLoading,setIsLoading] = useState(true)
   const [comments, setComments] = useState([
     {
       comment_id: 124,
@@ -49,6 +52,7 @@ export default function SingleArticle() {
       })
       .then((response) => {
         setAuthor(response);
+        setIsLoading(false)
       });
   }, []);
 
@@ -58,9 +62,18 @@ export default function SingleArticle() {
     });
   }, []);
 
-  return (
+  return isLoading ? (
+    <div className='wrapper'>
+    <div className='circle'></div>
+    <div className='circle'></div>
+    <div className='circle'></div>
+    <div className='shadow'></div>
+    <div className='shadow'></div>
+    <div className='shadow'></div>
+    <span>Loading</span>
+  </div>
+  ) : (
     <>
-      
       <div className='flex1'>
         <ul className='team'>
           <li className='member author'>
@@ -111,7 +124,9 @@ export default function SingleArticle() {
             setShowComments(!showComments);
           }}
           type='submit'
-        >{`${showComments ? "Hide":"Show" } Comments ${showComments ?'': '('+article.comment_count+')'}`}</button>
+        >{`${showComments ? "Hide" : "Show"} Comments ${
+          showComments ? "" : "(" + article.comment_count + ")"
+        }`}</button>
       </div>
 
       <div>
