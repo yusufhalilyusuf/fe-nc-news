@@ -19,9 +19,7 @@ export default function Navbar() {
         <li>
           <a href='#'>Users</a>
         </li>
-        <li>
-          <a href='#'>Comments</a>
-        </li>
+        
       </ul>
     </nav>
   );
