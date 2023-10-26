@@ -22,3 +22,9 @@ export const getAuthorByName = (username)=>{
     return response.data.user[0]
   })
 }
+
+export const getCommentsByArticleId = (id)=>{
+  return ncNews.get(`/articles/${id}/comments`).then((response)=>{
+    return response.data.comments
+  })
+}
