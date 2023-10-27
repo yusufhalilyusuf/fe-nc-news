@@ -16,16 +16,21 @@ export default function SingleArticle() {
   const [author, setAuthor] = useState();
   const [showVote, setShowVote] = useState(false);
   const [userVote, setUserVote] = useState(0);
+  const updateVote = (val)=>{
+    setUserVote((curr)=>{
+        return curr+val
+    })
+     updateVotes(article_id, val).catch(() => {
+        return alert("please try again");
+    })
 
-  const submitVoteHandler = (e) => {
-    e.preventDefault();
-    setUserVote(Number(e.target[0].value));
-  };
-  useEffect(()=>{
-    updateVotes(article_id, userVote).catch((e) => {
-        return alert(e);
-      });
-  },[userVote])
+    
+  }
+//   const submitVoteHandler = (e) => {
+//     e.preventDefault();
+//     setUserVote(Number(e.target[0].value));
+//   };
+
 
   useEffect(() => {
     getArticleById(article_id)
@@ -108,7 +113,7 @@ export default function SingleArticle() {
         <section>
           <button
             onClick={() => {
-              setShowVote(true);
+              setShowVote(!showVote);
             }}
           >
             Vote Article
@@ -116,13 +121,23 @@ export default function SingleArticle() {
           <br />
           <div>
             {showVote ? (
-              <form onSubmit={submitVoteHandler}>
-                <label>
-                  Vote
-                  <input type='number' />
-                </label>
-                <button type='submit'>Submit</button>
-              </form>
+                <div className="flex">
+                    <button disabled={userVote===+1} onClick={()=>{
+                        updateVote(1)
+                    }}>+</button>
+                    <p>{article.votes + userVote}</p>
+                    <button disabled={userVote===-1} onClick={()=>{
+                        updateVote(-1)
+                    }}>-</button>
+                    
+                </div>
+            //   <form onSubmit={submitVoteHandler}>
+            //     <label>
+            //       Vote
+            //       <input type='number' />
+            //     </label>
+            //     <button type='submit'>Submit</button>
+            //   </form>
             ) : null}
           </div>
         </section>

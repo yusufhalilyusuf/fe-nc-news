@@ -210,11 +210,11 @@ text-align: center;
 	background: var(--dark);
 }
 
-.member:hover {
+/* .member:hover {
 	transform: scale(1);
 	transition: var(--trans);
 	filter: drop-shadow(0px 20px 10px #0008);
-}
+} */
 
 
 
