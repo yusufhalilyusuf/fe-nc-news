@@ -30,7 +30,7 @@ export const getCommentsByArticleId = (id)=>{
 }
 
 export const updateVotes = async (id,value)=>{
-  await ncNews.patch(`/artices/${id}`,{inc_votes:value})
+  await ncNews.patch(`/articles/${id}`,{inc_votes:value})
   
 }
  
