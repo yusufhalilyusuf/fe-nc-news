@@ -3,48 +3,34 @@ import {
   getArticleById,
   getAuthorByName,
   getCommentsByArticleId,
+  updateVotes,
 } from "../utils/api";
 import { useParams } from "react-router-dom";
 
-
 export default function SingleArticle() {
-    const [isLoading,setIsLoading] = useState(true)
-  const [comments, setComments] = useState([
-    {
-      comment_id: 124,
-      body: "Vitae laudantium molestiae neque ut dicta fuga similique. Sit nesciunt magni sit beatae. Porro recusandae aut exercitationem eligendi voluptas. Dolore eligendi inventore magni voluptatem quia ut ut.",
-      article_id: 34,
-      author: "grumpy19",
-      votes: -1,
-      created_at: "2020-10-17T22:05:00.000Z",
-    },
-  ]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [comments, setComments] = useState();
   const [showComments, setShowComments] = useState(false);
   const { article_id } = useParams();
-  const [article, setArticle] = useState({
-    author: "jessjelly",
-    title: "Who are the most followed clubs and players on Instagram?",
-    article_id: 19,
-    topic: "football",
-    created_at: "2020-09-13T12:02:00.000Z",
-    votes: 0,
-    article_img_url:
-      "https://images.pexels.com/photos/685382/pexels-photo-685382.jpeg?w=700&h=700",
-    comment_count: "13",
-    total_count: 37,
-  });
-  const [author, setAuthor] = useState({
-    username: "tickle122",
-    name: "Tom Tickle",
-    avatar_url:
-      "https://vignette.wikia.nocookie.net/mrmen/images/d/d6/Mr-Tickle-9a.png/revision/latest?cb=20180127221953",
-  });
+  const [article, setArticle] = useState();
+  const [author, setAuthor] = useState();
+  const [showVote, setShowVote] = useState(false);
+  const [userVote, setUserVote] = useState(0);
+
+  const submitVoteHandler = (e) => {
+    e.preventDefault();
+    setUserVote(Number(e.target[0].value));
+  };
+  useEffect(()=>{
+    updateVotes(article_id, userVote).catch((e) => {
+        return alert(e);
+      });
+  },[userVote])
 
   useEffect(() => {
     getArticleById(article_id)
       .then((response) => {
         setArticle(response[0]);
-
         return response[0].author;
       })
       .then((auth) => {
@@ -52,26 +38,26 @@ export default function SingleArticle() {
       })
       .then((response) => {
         setAuthor(response);
-        setIsLoading(false)
+        setIsLoading(false);
       });
-  }, []);
+  }, [article_id]);
 
   useEffect(() => {
     getCommentsByArticleId(article_id).then((response) => {
       setComments(response);
     });
-  }, []);
+  }, [article_id]);
 
   return isLoading ? (
     <div className='wrapper'>
-    <div className='circle'></div>
-    <div className='circle'></div>
-    <div className='circle'></div>
-    <div className='shadow'></div>
-    <div className='shadow'></div>
-    <div className='shadow'></div>
-    <span>Loading</span>
-  </div>
+      <div className='circle'></div>
+      <div className='circle'></div>
+      <div className='circle'></div>
+      <div className='shadow'></div>
+      <div className='shadow'></div>
+      <div className='shadow'></div>
+      <span>Loading</span>
+    </div>
   ) : (
     <>
       <div className='flex1'>
@@ -96,7 +82,7 @@ export default function SingleArticle() {
         </ul>
         <ul className='team'>
           <li className='member details'>
-            <div id=''>
+            <div>
               <p>
                 <strong>Creation Date: </strong>{" "}
                 {article.created_at.slice(0, 10)}
@@ -105,7 +91,7 @@ export default function SingleArticle() {
                 <strong>Article Id: </strong> {article.article_id}
               </p>
               <p>
-                <strong>Votes : </strong> {article.votes}
+                <strong>Votes : </strong> {article.votes + Number(userVote)}
               </p>
               <p>
                 <strong>Topic : </strong> {article.topic}
@@ -119,6 +105,28 @@ export default function SingleArticle() {
         <img className='img-single' src={article.article_img_url} alt='' />
         <h1 className='center'>{article.title}</h1>
         <p className=''>{article.body}</p>
+        <section>
+          <button
+            onClick={() => {
+              setShowVote(true);
+            }}
+          >
+            Vote Article
+          </button>
+          <br />
+          <div>
+            {showVote ? (
+              <form onSubmit={submitVoteHandler}>
+                <label>
+                  Vote
+                  <input type='number' />
+                </label>
+                <button type='submit'>Submit</button>
+              </form>
+            ) : null}
+          </div>
+        </section>
+
         <button
           onClick={() => {
             setShowComments(!showComments);
