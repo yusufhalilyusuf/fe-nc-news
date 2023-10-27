@@ -3,6 +3,7 @@ import {
   getArticleById,
   getAuthorByName,
   getCommentsByArticleId,
+  postComment,
   updateVotes,
 } from "../utils/api";
 import { useParams } from "react-router-dom";
@@ -16,21 +17,21 @@ export default function SingleArticle() {
   const [author, setAuthor] = useState();
   const [showVote, setShowVote] = useState(false);
   const [userVote, setUserVote] = useState(0);
-  const updateVote = (val)=>{
-    setUserVote((curr)=>{
-        return curr+val
-    })
-     updateVotes(article_id, val).catch(() => {
-        return alert("please try again");
-    })
-
-    
-  }
-//   const submitVoteHandler = (e) => {
-//     e.preventDefault();
-//     setUserVote(Number(e.target[0].value));
-//   };
-
+  const [userComment, setUserComment] = useState(null);
+  const updateVote = (val) => {
+    setUserVote((curr) => {
+      return curr + val;
+    });
+    updateVotes(article_id, val).catch(() => {
+      setUserVote(0);
+      return alert("please try again");
+    });
+  };
+  const submitCommentHandler = () => {
+    postComment(article_id,userComment)
+      setUserComment(null)
+   
+  };
 
   useEffect(() => {
     getArticleById(article_id)
@@ -45,13 +46,13 @@ export default function SingleArticle() {
         setAuthor(response);
         setIsLoading(false);
       });
-  }, [article_id]);
+  }, []);
 
   useEffect(() => {
     getCommentsByArticleId(article_id).then((response) => {
       setComments(response);
     });
-  }, [article_id]);
+  }, []);
 
   return isLoading ? (
     <div className='wrapper'>
@@ -121,23 +122,26 @@ export default function SingleArticle() {
           <br />
           <div>
             {showVote ? (
-                <div className="flex">
-                    <button disabled={userVote===+1} onClick={()=>{
-                        updateVote(1)
-                    }}>+</button>
-                    <p>{article.votes + userVote}</p>
-                    <button disabled={userVote===-1} onClick={()=>{
-                        updateVote(-1)
-                    }}>-</button>
-                    
-                </div>
-            //   <form onSubmit={submitVoteHandler}>
-            //     <label>
-            //       Vote
-            //       <input type='number' />
-            //     </label>
-            //     <button type='submit'>Submit</button>
-            //   </form>
+              <div className='flex'>
+                <button
+                  disabled={userVote === +1}
+                  onClick={(e) => {
+                    console.log(e);
+                    updateVote(1);
+                  }}
+                >
+                  +
+                </button>
+                <p>{article.votes + userVote}</p>
+                <button
+                  disabled={userVote === -1}
+                  onClick={() => {
+                    updateVote(-1);
+                  }}
+                >
+                  -
+                </button>
+              </div>
             ) : null}
           </div>
         </section>
@@ -150,6 +154,38 @@ export default function SingleArticle() {
         >{`${showComments ? "Hide" : "Show"} Comments ${
           showComments ? "" : "(" + article.comment_count + ")"
         }`}</button>
+      </div>
+
+      <div>
+        {showComments ? (
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              console.log(e);
+              e.target[1].disabled=true
+              submitCommentHandler();
+              
+
+            }}
+            className='center'
+          >
+            <label>Add Comments:</label>
+            <br />
+            <textarea
+              onChange={(e) => {
+                setUserComment(e.target.value);
+              }}
+              id='text'
+              name='text'
+              rows='12'
+              cols='50'
+            ></textarea>
+            <br />
+            <button className='sbt-button'type='submit'>Submit</button>
+          </form>
+        ) : (
+          <p></p>
+        )}
       </div>
 
       <div>

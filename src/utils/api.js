@@ -30,7 +30,28 @@ export const getCommentsByArticleId = (id)=>{
 }
 
 export const updateVotes = async (id,value)=>{
-  await ncNews.patch(`/artices/${id}`,{inc_votes:value})
+  await ncNews.patch(`/articles/${id}`,{inc_votes:value})
+  
+}
+
+export const getUsers = async ()=>{
+  const {data} = await ncNews.get('/users');
+  return data.users
+}
+
+export const postComment = (id,body)=>{
+   ncNews.post(`/articles/${id}/comments`,{body:body,username:'tickle122'}).then((response)=>{
+
+    if(response.status ===201 ){ alert('your comment has been submitted')
+    location.reload()
+  } else{
+      alert('sorry something went wrong please try again');
+      location.reload()
+    }
+   }).catch(()=>{
+    alert('sorry something went wrong please try again');
+    location.reload()
+   })
   
 }
  
