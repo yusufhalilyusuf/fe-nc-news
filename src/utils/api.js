@@ -28,3 +28,9 @@ export const getCommentsByArticleId = (id)=>{
     return response.data.comments
   })
 }
+
+export const updateVotes = async (id,value)=>{
+  await ncNews.patch(`/articles/${id}`,{inc_votes:value})
+  
+}
+ 
