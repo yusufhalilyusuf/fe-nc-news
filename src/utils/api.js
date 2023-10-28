@@ -54,4 +54,12 @@ export const postComment = (id,body)=>{
    })
   
 }
+
+export const getTopics =  ()=>{
+    return ncNews.get('/topics').then(res=>{
+     
+      return res.data.topics
+    })
+  
+}
  

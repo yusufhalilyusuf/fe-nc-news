@@ -171,7 +171,7 @@ export default function SingleArticle() {
           >
             <label>Add Comments:</label>
             <br />
-            <textarea
+            <textarea required
               onChange={(e) => {
                 setUserComment(e.target.value);
               }}

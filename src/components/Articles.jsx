@@ -1,17 +1,25 @@
 import { useEffect, useState } from "react";
 import { getArticles } from "../utils/api";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import {  useNavigate,useParams } from "react-router-dom";
 import SingleArticle from "./SingleArticle";
 
 export default function Articles() {
   const [articleId, setArticleId] = useState();
   const [articles, setArticals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const {topic} = useParams()
+  
   useEffect(() => {
     getArticles().then((response) => {
-      setArticals(response);
+      if(topic){
+        setArticals(response.filter(x=>x.topic ===topic))
+        setIsLoading(false)
+      }else{
+        setArticals(response);
       setIsLoading(false);
-    });
+      }
+      
+    })
   }, []);
   const navigate = useNavigate();
   useEffect(() => {
