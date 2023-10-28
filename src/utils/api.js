@@ -34,6 +34,9 @@ export const updateVotes = async (id,value)=>{
   
 }
 
+
+
+
 export const getUsers = async ()=>{
   const {data} = await ncNews.get('/users');
   return data.users
