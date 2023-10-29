@@ -1,7 +1,8 @@
-import { useEffect, useState,  } from "react";
+import { useEffect, useState, useContext } from "react";
 import { getArticles } from "../utils/api";
-import { useNavigate, useParams, useSearchParams,createSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import * as React from "react";
+import { UserContext } from "../contexts/Usercontext";
 
 export default function Articles() {
   const [articleId, setArticleId] = useState();
@@ -9,18 +10,21 @@ export default function Articles() {
   const [isLoading, setIsLoading] = useState(true);
   const { topic } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-console.log(searchParams.get('sort_by'),searchParams.get('order'));
+  const {authUser,setAuthUser} = useContext(UserContext)
+  
   useEffect(() => {
+   
     getArticles(searchParams.get('sort_by'), searchParams.get('order')).then((response) => {
       if (topic) {
         setArticals(response.filter((x) => x.topic === topic));
         setIsLoading(false);
+
       } else {
         setArticals(response);
         setIsLoading(false);
       }
     });
-  }, [searchParams]);
+  }, [searchParams,authUser]);
   const navigate = useNavigate();
   useEffect(() => {
     if (articleId) {

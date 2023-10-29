@@ -47,14 +47,14 @@ export const postComment = (id,body)=>{
    ncNews.post(`/articles/${id}/comments`,{body:body,username:'tickle122'}).then((response)=>{
 
     if(response.status ===201 ){ alert('your comment has been submitted')
-    location.reload()
+    
   } else{
       alert('sorry something went wrong please try again');
-      location.reload()
+      
     }
    }).catch(()=>{
     alert('sorry something went wrong please try again');
-    location.reload()
+    
    })
   
 }
@@ -63,6 +63,13 @@ export const getTopics =  ()=>{
     return ncNews.get('/topics').then(res=>{
      
       return res.data.topics
+    })
+  
+}
+export const deleteComment =  (id)=>{
+    return ncNews.delete(`/comments/${id}`).then(res=>{
+     console.log(res.status);
+      return res
     })
   
 }

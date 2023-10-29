@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import {
+  deleteComment,
   getArticleById,
   getAuthorByName,
   getCommentsByArticleId,
@@ -7,7 +8,7 @@ import {
   updateVotes,
 } from "../utils/api";
 import { useParams } from "react-router-dom";
-
+import { UserContext } from "../contexts/Usercontext";
 export default function SingleArticle() {
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState();
@@ -18,6 +19,7 @@ export default function SingleArticle() {
   const [showVote, setShowVote] = useState(false);
   const [userVote, setUserVote] = useState(0);
   const [userComment, setUserComment] = useState(null);
+  const { authUser } = useContext(UserContext);
   const updateVote = (val) => {
     setUserVote((curr) => {
       return curr + val;
@@ -32,6 +34,15 @@ export default function SingleArticle() {
       setUserComment(null)
    
   };
+
+  const deleteHandler= (id)=>{
+    deleteComment(id).then(res=>{
+      console.log(id);
+      res.status===204? alert('success'): alert('something went wrong')
+    }).catch(()=>{
+      alert('something went wrong')
+    })
+  }
 
   useEffect(() => {
     getArticleById(article_id)
@@ -52,7 +63,7 @@ export default function SingleArticle() {
     getCommentsByArticleId(article_id).then((response) => {
       setComments(response);
     });
-  }, []);
+  }, [comments]);
 
   return isLoading ? (
     <div className='wrapper'>
@@ -147,6 +158,7 @@ export default function SingleArticle() {
         </section>
 
         <button
+        id="show"
           onClick={() => {
             setShowComments(!showComments);
           }}
@@ -164,6 +176,8 @@ export default function SingleArticle() {
               console.log(e);
               e.target[1].disabled=true
               submitCommentHandler();
+              e.target[0].value=''
+              e.target[1].disabled=false
               
 
             }}
@@ -200,6 +214,13 @@ export default function SingleArticle() {
                     <p>
                       <strong>{comment.author}</strong>{" "}
                     </p>
+                    {
+                       authUser.username===comment.author ? (
+                        <button type='button' id="delete" onClick={()=>{
+                          deleteHandler(comment.comment_id)
+                        }}>Delete</button>
+                      ) : null
+                    }
                     <p>
                       <strong> Votes: </strong>
                       {comment.votes}
