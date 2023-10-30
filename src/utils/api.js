@@ -15,6 +15,9 @@ export const getArticles = (sort_by,order) => {
 export const getArticleById= (id)=>{
   return ncNews.get(`/articles/${id}`).then((response)=>{
     return response.data.article
+  }).catch(()=>{
+    alert('articleId not found')
+    history.back()
   })
 }
 

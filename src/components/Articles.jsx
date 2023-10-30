@@ -1,30 +1,34 @@
 import { useEffect, useState, useContext } from "react";
 import { getArticles } from "../utils/api";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import * as React from "react";
-import { UserContext } from "../contexts/Usercontext";
 
-export default function Articles() {
+export default function Articles(topics) {
   const [articleId, setArticleId] = useState();
   const [articles, setArticals] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { topic } = useParams();
   const [searchParams, setSearchParams] = useSearchParams();
-  const {authUser,setAuthUser} = useContext(UserContext)
-  
-  useEffect(() => {
-   
-    getArticles(searchParams.get('sort_by'), searchParams.get('order')).then((response) => {
-      if (topic) {
-        setArticals(response.filter((x) => x.topic === topic));
-        setIsLoading(false);
+  const topicArray = topics.topics.map((topic) => {
+    return topic.slug;
+  });
 
-      } else {
-        setArticals(response);
-        setIsLoading(false);
+  useEffect(() => {
+    getArticles(searchParams.get("sort_by"), searchParams.get("order")).then(
+      (response) => {
+        if (topic) {
+          if (!topicArray.includes(topic)) {
+            alert("topic not found");
+            navigate(-1);
+          }
+          setArticals(response.filter((x) => x.topic === topic));
+          setIsLoading(false);
+        } else {
+          setArticals(response);
+          setIsLoading(false);
+        }
       }
-    });
-  }, [searchParams,authUser]);
+    );
+  }, [searchParams, topic]);
   const navigate = useNavigate();
   useEffect(() => {
     if (articleId) {
@@ -48,11 +52,8 @@ export default function Articles() {
       <div className='flex'>
         <label
           onChange={(e) => {
-          
-           searchParams.set(e.target.name ,e.target.value)
-            setSearchParams(
-             searchParams
-            )
+            searchParams.set(e.target.name, e.target.value);
+            setSearchParams(searchParams);
           }}
           htmlFor=''
         >
@@ -68,17 +69,19 @@ export default function Articles() {
         </label>
         <label
           onChange={(e) => {
-          
-            searchParams.set(e.target.name ,e.target.value)
-            setSearchParams(
-             searchParams
-            )
+            searchParams.set(e.target.name, e.target.value);
+            setSearchParams(searchParams);
           }}
           htmlFor=''
         >
           {" "}
           {` Order By `}
-          <select className='center' name='order' id='order' defaultValue='asc'>
+          <select
+            className='center'
+            name='order'
+            id='order'
+            defaultValue='desc'
+          >
             <option value='asc'>Ascending</option>
             <option value='desc'>Descending</option>
           </select>

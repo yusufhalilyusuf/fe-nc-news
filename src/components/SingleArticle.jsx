@@ -7,8 +7,9 @@ import {
   postComment,
   updateVotes,
 } from "../utils/api";
-import { useParams } from "react-router-dom";
+import { useParams,useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/Usercontext";
+import ErrorPage from "./ErrorPage";
 export default function SingleArticle() {
   const [isLoading, setIsLoading] = useState(true);
   const [comments, setComments] = useState();
@@ -20,6 +21,7 @@ export default function SingleArticle() {
   const [userVote, setUserVote] = useState(0);
   const [userComment, setUserComment] = useState(null);
   const { authUser } = useContext(UserContext);
+const navigate = useNavigate()
   const updateVote = (val) => {
     setUserVote((curr) => {
       return curr + val;
@@ -56,8 +58,8 @@ export default function SingleArticle() {
       .then((response) => {
         setAuthor(response);
         setIsLoading(false);
-      });
-  }, []);
+      })
+  }, [article_id]);
 
   useEffect(() => {
     getCommentsByArticleId(article_id).then((response) => {
