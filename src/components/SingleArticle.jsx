@@ -184,9 +184,10 @@ export default function SingleArticle() {
             }}
             className='center'
           >
-            <label>Add Comment</label>
+            <label>Add Comment
+
             <br />
-            <label htmlFor='label'>
+            
               <textarea
               placeholder="Please add your comment..."
                 required
@@ -197,8 +198,9 @@ export default function SingleArticle() {
                 name='text'
                 rows='12'
                 cols='50'
-              ></textarea>
-            </label>
+                ></textarea>
+                </label>
+            
             <br />
             <button className='sbt-button' type='submit'>
               Submit

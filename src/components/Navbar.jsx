@@ -10,7 +10,7 @@ export default function Navbar(topics) {
   return (
     <div className='topnav' id='myTopnav'>
       <Link to='/' className='active'>
-        Home
+        HOME
       </Link>
       <Link to='/articles'>ARTICLES</Link>
       <Link to='/articles/topics'>TOPICS</Link>
