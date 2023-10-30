@@ -35,7 +35,7 @@ function App() {
     </div>
   ) : (
     <>
-   {console.log(topics)}
+   
       <main className='main'>
         <h1 style={{ textAlign: "center" }}>Welcome to Nc News</h1>
         <Navbar  />
