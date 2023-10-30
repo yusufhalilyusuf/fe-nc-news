@@ -7,7 +7,7 @@ import {
   postComment,
   updateVotes,
 } from "../utils/api";
-import { useParams,useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/Usercontext";
 import ErrorPage from "./ErrorPage";
 export default function SingleArticle() {
@@ -21,7 +21,7 @@ export default function SingleArticle() {
   const [userVote, setUserVote] = useState(0);
   const [userComment, setUserComment] = useState(null);
   const { authUser } = useContext(UserContext);
-const navigate = useNavigate()
+  const navigate = useNavigate();
   const updateVote = (val) => {
     setUserVote((curr) => {
       return curr + val;
@@ -32,19 +32,20 @@ const navigate = useNavigate()
     });
   };
   const submitCommentHandler = () => {
-    postComment(article_id,userComment)
-      setUserComment(null)
-   
+    postComment(article_id, userComment);
+    setUserComment(null);
   };
 
-  const deleteHandler= (id)=>{
-    deleteComment(id).then(res=>{
-      console.log(id);
-      res.status===204? alert('success'): alert('something went wrong')
-    }).catch(()=>{
-      alert('something went wrong')
-    })
-  }
+  const deleteHandler = (id) => {
+    deleteComment(id)
+      .then((res) => {
+        console.log(id);
+        res.status === 204 ? alert("success") : alert("something went wrong");
+      })
+      .catch(() => {
+        alert("something went wrong");
+      });
+  };
 
   useEffect(() => {
     getArticleById(article_id)
@@ -58,7 +59,7 @@ const navigate = useNavigate()
       .then((response) => {
         setAuthor(response);
         setIsLoading(false);
-      })
+      });
   }, [article_id]);
 
   useEffect(() => {
@@ -83,10 +84,10 @@ const navigate = useNavigate()
         <ul className='team'>
           <li className='member author'>
             <div className='thumb'>
-              <img src={author.avatar_url} />
+              <img src={author.avatar_url} alt='author pic' />
             </div>
             <div className='description'>
-              <h3>{author.name}</h3>
+              <h2>{author.name}</h2>
               <p>
                 {` Meet ${
                   author.name.split(" ")[0]
@@ -160,7 +161,7 @@ const navigate = useNavigate()
         </section>
 
         <button
-        id="show"
+          id='show'
           onClick={() => {
             setShowComments(!showComments);
           }}
@@ -176,28 +177,32 @@ const navigate = useNavigate()
             onSubmit={(e) => {
               e.preventDefault();
               console.log(e);
-              e.target[1].disabled=true
+              e.target[1].disabled = true;
               submitCommentHandler();
-              e.target[0].value=''
-              e.target[1].disabled=false
-              
-
+              e.target[0].value = "";
+              e.target[1].disabled = false;
             }}
             className='center'
           >
-            <label>Add Comments:</label>
+            <label>Add Comment</label>
             <br />
-            <textarea required
-              onChange={(e) => {
-                setUserComment(e.target.value);
-              }}
-              id='text'
-              name='text'
-              rows='12'
-              cols='50'
-            ></textarea>
+            <label htmlFor='label'>
+              <textarea
+              placeholder="Please add your comment..."
+                required
+                onChange={(e) => {
+                  setUserComment(e.target.value);
+                }}
+                id='text'
+                name='text'
+                rows='12'
+                cols='50'
+              ></textarea>
+            </label>
             <br />
-            <button className='sbt-button'type='submit'>Submit</button>
+            <button className='sbt-button' type='submit'>
+              Submit
+            </button>
           </form>
         ) : (
           <p></p>
@@ -216,13 +221,17 @@ const navigate = useNavigate()
                     <p>
                       <strong>{comment.author}</strong>{" "}
                     </p>
-                    {
-                       authUser.username===comment.author ? (
-                        <button type='button' id="delete" onClick={()=>{
-                          deleteHandler(comment.comment_id)
-                        }}>Delete</button>
-                      ) : null
-                    }
+                    {authUser.username === comment.author ? (
+                      <button
+                        type='button'
+                        id='delete'
+                        onClick={() => {
+                          deleteHandler(comment.comment_id);
+                        }}
+                      >
+                        Delete
+                      </button>
+                    ) : null}
                     <p>
                       <strong> Votes: </strong>
                       {comment.votes}

@@ -18,7 +18,7 @@ export default function Navbar(topics) {
       <Link to=''>CONTACT</Link>
       <Link to='/users'>
         {" "}
-        <img className='avt' src={authUser.avatar_url} alt='' />
+        <img className='avt' src={authUser.avatar_url} alt='some  text' />
       </Link>
     </div>
   );

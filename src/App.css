@@ -235,7 +235,7 @@ text-align: center;
 	margin-bottom: 1em;
 }
 
-h3 {
+h2 {
 	background: linear-gradient(182deg, #fff0 60%, var(--dark) 0 100%);
 	display: inline;
 	transform: rotate(-2deg);
@@ -476,10 +476,10 @@ body{
   font-size: 17px;
 }
 
-.active {
+/* .active {
   background-color: #04AA6D;
   color: white;
-}
+} */
 
 .topnav .icon {
   display: none;
