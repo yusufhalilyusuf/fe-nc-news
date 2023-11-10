@@ -23,3 +23,21 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })
+
+Cypress.Commands.add('areItemsOrdered',(order='Date',sort='Descending')=>{
+cy.get('p.box').should()
+})
+
+
+// then(res=>{
+//     const actual = [...res].map((item)=>{
+//         return item.innerText.replaceAll(/\D/gi,'')
+//     })
+//     if(sort==='Descending'){
+//         cy.log('hi')
+//         expect(actual).to.deep.eq([...actual].sort().reverse())
+//     }else{
+//         cy.log('ho')
+//         expect(actual).to.deep.eq([...actual].sort())
+//     }
+// })

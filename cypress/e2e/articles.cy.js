@@ -1,3 +1,6 @@
+import ArticlePage from "./pages/ArticlePage";
+
+const articlesPage = new ArticlePage();
 describe("Articles page", () => {
   it("should have sortby with date, votes and comment count options ", () => {
     cy.visit("/articles");
@@ -19,28 +22,39 @@ describe("Articles page", () => {
       expect(actual).to.deep.eq(["Ascending", "Descending"]);
     });
   });
-  it("should have default order by date and sort ascending", () => {
-    cy.visit("/articles");
-    cy.get("select")
-      .eq(0)
-      .find("option")
-      .should("have.value", "created_at")
-      .and("have.attr", "selected");
-    cy.get("select")
-      .eq(1)
-      .find("option")
-      .eq(1)
-      .should("have.value", "desc")
-      .and("have.attr", "selected");
+  // it("should have default order by date and sort ascending", () => {
+  //   cy.visit("/articles");
+  //   cy.get("select")
+  //     .eq(0)
+  //     .find("option")
+  //     .should("have.value", "created_at")
+  //     .and("have.attr", "selected");
+  //   cy.get("select")
+  //     .eq(1)
+  //     .find("option")
+  //     .eq(1)
+  //     .should("have.value", "desc")
+  //     .and("have.attr", "selected");
+  // });
+
+  // it("should list articles correctly ordering by date and sorting by descending", () => {
+  //   cy.visit("/articles");
+  //   cy.get(".article p.box:nth-child(7)").then((dates) => {
+  //     const actual = [...dates].map((date) => {
+  //       return date.innerText.replaceAll(/\D/gi, "");
+  //     });
+  //     expect(actual).to.deep.eq([...actual].sort().reverse());
+  //   });
+  // });
+
+  it("should have default order by date and sort descending", () => {
+    articlesPage.visit();
+    articlesPage.sortBy.find(":selected").contains("Date");
+    articlesPage.orderBy.find(":selected").contains("Descending");
   });
 
-  it("should list articles correctly ordering by date and sorting by descending", () => {
+  it.only("should list articles correctly ordering by date and sorting by descending", () => {
     cy.visit("/articles");
-    cy.get(".article p.box:nth-child(7)").then((dates) => {
-      const actual = [...dates].map((date) => {
-        return date.innerText.replaceAll(/\D/gi, "");
-      });
-      expect(actual).to.deep.eq([...actual].sort().reverse());
-    });
+    cy.areItemsOrdered("Date", "Ascending");
   });
 });

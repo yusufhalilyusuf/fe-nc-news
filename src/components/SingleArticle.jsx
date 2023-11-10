@@ -66,7 +66,7 @@ export default function SingleArticle() {
     getCommentsByArticleId(article_id).then((response) => {
       setComments(response);
     });
-  }, [comments]);
+  }, []);
 
   return isLoading ? (
     <div className='wrapper'>
