@@ -7,6 +7,9 @@ export default class ArticlePage extends Navbar{
     get sortBy(){
          return cy.get(':nth-child(1) > .center')
     }
+    get sortByOptions(){
+         return cy.get(':nth-child(1) > .center option')
+    }
 
     applySortby(option){
         this.sortBy.select(option)
@@ -14,6 +17,9 @@ export default class ArticlePage extends Navbar{
 
     get orderBy(){
         return cy.get('#order')
+    }
+    get orderByOptions(){
+        return cy.get('#order option')
     }
 
     applyOrderBy(option){

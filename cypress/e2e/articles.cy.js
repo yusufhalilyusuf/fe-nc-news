@@ -2,26 +2,26 @@ import ArticlePage from "./pages/ArticlePage";
 
 const articlesPage = new ArticlePage();
 describe("Articles page", () => {
-  it("should have sortby with date, votes and comment count options ", () => {
-    cy.visit("/articles");
-    cy.get("[name=sort_by] option").then((options) => {
-      const actual = [...options].map((option) => {
-        return option.text;
-      });
-      cy.log(actual);
-      expect(actual).to.deep.eq(["Date", "Votes", "Comment Count"]);
-    });
-  });
-  it("should have order ascending and descending options ", () => {
-    cy.visit("/articles");
-    cy.get("[name=order] option").then((options) => {
-      const actual = [...options].map((option) => {
-        return option.text;
-      });
-      cy.log(actual);
-      expect(actual).to.deep.eq(["Ascending", "Descending"]);
-    });
-  });
+  // it("should have sortby with date, votes and comment count options ", () => {
+  //   cy.visit("/articles");
+  //   cy.get("[name=sort_by] option").then((options) => {
+  //     const actual = [...options].map((option) => {
+  //       return option.text;
+  //     });
+  //     cy.log(actual);
+  //     expect(actual).to.deep.eq(["Date", "Votes", "Comment Count"]);
+  //   });
+  // });
+  // it("should have order ascending and descending options ", () => {
+  //   cy.visit("/articles");
+  //   cy.get("[name=order] option").then((options) => {
+  //     const actual = [...options].map((option) => {
+  //       return option.text;
+  //     });
+  //     cy.log(actual);
+  //     expect(actual).to.deep.eq(["Ascending", "Descending"]);
+  //   });
+  // });
   // it("should have default order by date and sort ascending", () => {
   //   cy.visit("/articles");
   //   cy.get("select")
@@ -53,8 +53,38 @@ describe("Articles page", () => {
     articlesPage.orderBy.find(":selected").contains("Descending");
   });
 
-  it.only("should list articles correctly ordering by date and sorting by descending", () => {
-    cy.visit("/articles");
-    cy.areItemsOrdered("Date", "Ascending");
+  it("should list articles correctly ordering by date and sorting by descending", () => {
+    articlesPage.visit();
+    cy.areItemsOrdered("Date", "Descending");
+  });
+
+  it("should have order ascending and descending options ", () => {
+    articlesPage.visit();
+
+    articlesPage.orderByOptions.then((options) => {
+      const actual = [...options].map((option) => {
+        return option.text;
+      });
+      cy.log(actual);
+      expect(actual).to.deep.eq(["Ascending", "Descending"]);
+    });
+  });
+  it("should have sort Date, Votes  and Comment Count  options ", () => {
+    articlesPage.visit();
+    articlesPage.sortByOptions.then((options) => {
+      const actual = [...options].map((option) => {
+        return option.text;
+      });
+      cy.log(actual);
+      expect(actual).to.deep.eq(["Date", "Votes", "Comment Count"]);
+    });
+  });
+
+  it("should sort articles correctly when selecting by votes ascending", () => {
+    articlesPage.visit();
+    articlesPage.applySortby("Votes");
+    articlesPage.applyOrderBy("Ascending");
+    cy.wait(1000);
+    cy.areItemsOrdered("Votes", "Ascending");
   });
 });
