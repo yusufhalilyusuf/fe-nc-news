@@ -116,15 +116,15 @@ export default function Articles(topics) {
                 <strong>{"Topic: "}</strong>
                 {article.topic.toUpperCase()}
               </p>
-              <p className='box'>
+              <p className='box' data-cy='Comments'>
                 <strong>{"Comments: "}</strong>
                 {article.comment_count}
               </p>
-              <p className='box'>
+              <p className='box' data-cy='Votes'>
                 <strong>{"Votes: "}</strong>
                 {article.votes}
               </p>
-              <p className='box'>
+              <p className='box' data-cy='Date'>
                 <strong>{"Date: "}</strong>
                 {article.created_at.slice(0, 10)}
               </p>
