@@ -83,14 +83,15 @@ describe("Articles page", () => {
   it("should sort articles correctly when selecting by votes ascending", () => {
     articlesPage.visit();
     articlesPage.applySortby("Votes");
+    cy.wait(1000)
     articlesPage.applyOrderBy("Ascending");
     cy.wait(2000);
     cy.areItemsOrdered("Votes", "Ascending");
   });
-  it.only("should return all articles as default", () => {
+  it("should return all articles as default", () => {
     articlesPage.visit();
-    cy.task('dbQuery','select count(*) from articles').then(res=>{
-      articlesPage.allArticles.should('have.length',res[0].count)
-    })
+    cy.task("dbQuery", "select count(*) from articles").then((res) => {
+      articlesPage.allArticles.should("have.length", res[0].count);
+    });
   });
 });

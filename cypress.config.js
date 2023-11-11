@@ -4,6 +4,9 @@ import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 import dotenv from 'dotenv'
 export default defineConfig({
+  retries: {
+    runMode: 2,
+  },
   e2e: {
     defaultCommandTimeout: 15000,
     baseUrl: "https://fe-news.netlify.app",
