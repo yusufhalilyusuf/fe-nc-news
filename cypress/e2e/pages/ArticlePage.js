@@ -30,4 +30,8 @@ export default class ArticlePage extends Navbar{
         cy.get(`.main > :nth-child(4) > :nth-child(${index})`)
     }
 
+    get allArticles(){
+        return cy.get('.article')
+    }
+
 }

@@ -84,7 +84,13 @@ describe("Articles page", () => {
     articlesPage.visit();
     articlesPage.applySortby("Votes");
     articlesPage.applyOrderBy("Ascending");
-    cy.wait(1000);
+    cy.wait(2000);
     cy.areItemsOrdered("Votes", "Ascending");
+  });
+  it.only("should return all articles as default", () => {
+    articlesPage.visit();
+    cy.task('dbQuery','select count(*) from articles').then(res=>{
+      articlesPage.allArticles.should('have.length',res[0].count)
+    })
   });
 });
