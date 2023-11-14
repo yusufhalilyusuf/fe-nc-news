@@ -63,8 +63,8 @@ li a:hover {
   display: block;
   margin: 0 auto;
   background-color: beige;
-  width: 30vw;
-  height: 20rem;
+  width: 30%;
+  height: 30%;
   padding: 1rem;
   margin-top: 1rem;
   border: solid black;
@@ -363,6 +363,10 @@ h2 {
 	transform: scale(1);
 	transition: var(--trans);
 	filter: drop-shadow(0px 20px 10px #0008);
+}
+
+textarea{
+  width:90vw;
 }
 
 
