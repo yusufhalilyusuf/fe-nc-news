@@ -356,9 +356,10 @@ h2 {
   flex-wrap: wrap;
   justify-content:space-between;
   text-align: left;
-  margin: auto;
+
  
 }
+
 .article:hover {
 	transform: scale(1);
 	transition: var(--trans);
@@ -366,7 +367,7 @@ h2 {
 }
 
 textarea{
-  width:90vw;
+  max-width:90vw;
 }
 
 

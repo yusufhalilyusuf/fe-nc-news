@@ -7,11 +7,11 @@ import {
   postComment,
   updateVotes,
 } from "../utils/api";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { UserContext } from "../contexts/Usercontext";
 export default function SingleArticle() {
   const [isLoading, setIsLoading] = useState(true);
-  const [comments, setComments] = useState();
+  const [comments, setComments] = useState([{},{}]);
   const [showComments, setShowComments] = useState(false);
   const { article_id } = useParams();
   const [article, setArticle] = useState();
@@ -33,6 +33,8 @@ export default function SingleArticle() {
   const submitCommentHandler = () => {
     postComment(article_id, userComment);
     setUserComment(null);
+   
+    
   };
 
   const deleteHandler = (id) => {
@@ -122,7 +124,7 @@ export default function SingleArticle() {
 
       <div className='center'>
         <img className='img-single' src={article.article_img_url} alt='' />
-        <h1 className='center'>{article.title}</h1>
+        <h1 className='center' style={{maxWidth:"90%",margin:"auto"}}>{article.title}</h1>
         <p className=''>{article.body}</p>
         <section>
           <button
@@ -180,6 +182,7 @@ export default function SingleArticle() {
               submitCommentHandler();
               e.target[0].value = "";
               e.target[1].disabled = false;
+              
             }}
             className='center'
           >
@@ -219,7 +222,7 @@ export default function SingleArticle() {
                   <blockquote>{comment.body}</blockquote>
                   <div></div>
                   <section className='flex2'>
-                    <p>
+                    <p style={{marginLeft:'1rem'}}>
                       <strong>{comment.author}</strong>{" "}
                     </p>
                     {authUser.username === comment.author ? (
@@ -233,7 +236,7 @@ export default function SingleArticle() {
                         Delete
                       </button>
                     ) : null}
-                    <p>
+                    <p style={{marginRight:'1rem'}}>
                       <strong> Votes: </strong>
                       {comment.votes}
                     </p>

@@ -15,7 +15,7 @@ export default function Navbar(topics) {
       <Link to='/articles'>ARTICLES</Link>
       <Link to='/articles/topics'>TOPICS</Link>
       <Link to='/users'>USERS</Link>
-      <Link to=''>CONTACT</Link>
+      {/* <Link to=''>CONTACT</Link> */}
       <Link to='/users'>
         {" "}
         <img className='avt' src={authUser.avatar_url} alt='some  text' />
